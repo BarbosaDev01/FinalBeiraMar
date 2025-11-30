@@ -47,7 +47,7 @@ function carregarSidebar() {
     <nav id="sidebar">
       <div id="sidebar_content">
         <div id="user">
-          <img src="/assets/logo.png" id="user_avatar" alt="Avatar">
+          <img src="../assets/logo.png" id="user_avatar" alt="Avatar">
           <p id="user_info"><span class="item-description"></span></p>
         </div>
 
@@ -109,7 +109,7 @@ else
 document.getElementById("demo").innerHTML=x;
 }
 
-function irCtrl()    { window.location.href = "/ControleEstoque/controleEstoque.html"; }
-function irPdd()     { window.location.href = "/pedidos3/pedidos3.html"; }
-function irVendas()  { window.location.href = "/vendas3/vendas3.html"; }
-function irProd()    { window.location.href = "/TelasProducao/producao.html"; }
+function irCtrl()    { window.location.href = "../ControleEstoque/controleEstoque.html"; }
+function irPdd()     { window.location.href = "../pedidos3/pedidos3.html"; }
+function irVendas()  { window.location.href = "../vendas3/vendas3.html"; }
+function irProd()    { window.location.href = "../TelasProducao/producao.html"; }
