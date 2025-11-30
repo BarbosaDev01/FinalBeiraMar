@@ -1,6 +1,6 @@
 function IrMenu(){
     // Esta linha está correta para navegação
-    window.location.href = "../ControleEstoque/controleEstoque.html"; 
+    window.location.href = "./ControleEstoque/controleEstoque.html"; 
 }
 function IrNew(){
     // Esta linha está correta para navegação
