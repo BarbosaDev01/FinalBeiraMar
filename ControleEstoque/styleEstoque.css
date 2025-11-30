@@ -1,0 +1,857 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    /* Alterado para o fundo mais claro da Imagem 1 */
+    background-color: rgb(222, 236, 248); 
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: sans-serif; 
+    margin: 0; 
+}
+.caixa-peixes button{
+    background-color: transparent;
+    border: none;
+}
+
+#sidebar {
+    /* Mantenho seu sidebar original */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, #2148C0, #107CE0);
+    height: 100vh;
+    width: 250px; 
+    border-radius: 0px 19px 19px 0px; 
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+main {
+    flex: 1;
+    padding: 30px 40px;
+    margin-left: 0;
+}
+
+
+/* conteúdo do overlay */
+.filtro-opcoes {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+}
+.container {
+    width: 100%;
+    max-width: 1200px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    /* Removido margin-left: 20px; para evitar duplicação de espaço */
+     margin-left: 30px;
+}
+
+/* --- Cabeçalho --- */
+.header {
+    width: 100%;
+    margin: 0 0 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.titulo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color:#107CE0;
+;
+    margin: 0;
+}
+
+.subheader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.link-historico {
+    /* Mantém a cor #107CE0 */
+    color: #107CE0;
+    text-decoration: none;
+    font-weight: bold;
+    border-left: 1px solid #ccc; 
+    padding-left: 10px;
+    line-height: 1; 
+}
+
+.acoes-header button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  padding: 10px;
+}
+nav{ 
+    display: flex;
+     gap: 15px; 
+  margin-right: 10px;
+  align-items: center;
+}
+
+/* --- Botão de Filtro --- */
+.botao-filtro {
+   background-color: #107CE0;
+   width: 100px;
+   color: white;
+   font-weight: 600;
+   height: 30px;
+   border-radius: 10px;
+   border-color: transparent;
+   align-items: center;
+   
+
+}
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6); /* mesmo tom para todos */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+.overlay.active {
+    display: flex; /* mostra apenas quando ativa */
+}
+
+
+/* --- Conteúdo do Overlay (a caixa branca) --- */
+.filtro-opcoes {
+    background-color: white;
+    padding: 20px; /* Padding ajustado */
+    border-radius: 12px; /* Bordas arredondadas */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* Sombra */
+    min-width: 250px; /* Largura mínima ajustada para caber os botões */
+    max-width: 90%; /* Limita a largura para telas grandes */
+    display: flex; /* Flexbox para organizar os botões */
+    flex-direction: column; /* Botões em coluna */
+    gap: 15px; /* Espaço entre os botões */
+    transform: translateY(-20px); /* Transição de entrada */
+    opacity: 0; /* Começa invisível */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transição */
+    position: relative; /* Para posicionar o "FiltroOpcoes" */
+}
+
+/* Título "FiltroOpcoes" fora da caixa branca */
+.filtro-opcoes::before {
+    content: "FiltroOpcoes"; /* Texto "FiltroOpcoes" */
+    position: absolute;
+    top: -40px; /* Posição acima da caixa */
+    left: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white; /* Cor do texto */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+}
+
+/* Ocultar o H2 e o Span de status dentro do overlay, se existirem no HTML */
+.filtro-opcoes h2,
+.filtro-opcoes #status-exibido {
+    display: none; /* Esconde o título e o span de status */
+}
+
+
+/* Quando o overlay está visível, o conteúdo também aparece */
+.overlay.active .filtro-opcoes {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* --- Estilos para os Botões dentro do Overlay --- */
+.filtro-opcoes button {
+    padding: 15px 25px; /* Mais padding para botões maiores */
+    border: none;
+    border-radius: 8px; /* Bordas arredondadas */
+    font-size: 1.1rem; /* Fonte maior */
+    font-weight: bold;
+    color: white; /* Cor do texto dos botões */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra nos botões */
+}
+
+/* Cores específicas dos botões, como na imagem */
+.btn-producao {
+    background-color: #e53935; /* Vermelho */
+}
+.btn-producao:hover {
+    background-color: #c62828; /* Vermelho mais escuro no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-estoque {
+    background-color: #c0ca33; /* Amarelo esverdeado */
+}
+.btn-estoque:hover {
+    background-color: #9e9d24; /* Amarelo esverdeado mais escuro */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-venda {
+    background-color: #2196f3; /* Azul */
+}
+.btn-venda:hover {
+    background-color: #1976d2; /* Azul mais escuro no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Ocultar o botão de fechar, se ele não for mais necessário na nova interface */
+.btn-fechar {
+    display: none; /* Esconde o botão de fechar */
+}
+
+
+
+/* --- Barra de Controle (Header da Tabela) --- */
+.barra-controle {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 1fr 150px 150px 100px;
+    align-items: center;
+    /* Usa o azul mais escuro para o cabeçalho da tabela */
+    background-color: #107CE0; 
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.barra-controle span:nth-child(4) { 
+    text-align: center;
+}
+.barra-controle span:nth-child(5) { 
+    text-align: right;
+}
+
+/* --- Caixas de produtos (Linhas da Tabela) --- */
+.caixa-peixes {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 1fr 150px 150px 100px;
+    align-items: center;
+    background-color: white; 
+    border: 1px solid #ddd;
+    border-top: none; 
+    border-radius: 0;
+    padding: 15px 20px; 
+    margin: 0; 
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.caixa-peixes:last-of-type {
+    border-radius: 0 0 8px 8px;
+}
+
+.caixa-peixes span:nth-child(1) { 
+    font-weight: bold;
+}
+
+.produto-imagem {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.caixa-peixes .imagem-peixe-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+}
+
+/* Oculta o <span> do nome do peixe se o HTML original for mantido */
+.caixa-peixes > span:nth-child(4) { 
+    display: none; 
+}
+
+/* --- Status Dropdown --- */
+.status-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 110px; 
+    margin: 0 auto; 
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-weight: bold;
+    color: #333; 
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+}
+
+.status-container::after {
+    content: '▼';
+    font-size: 0.5rem;
+    color: #333;
+    margin-left: 5px;
+    opacity: 0.7;
+}
+
+.status-icon {
+    display: none;
+}
+
+/* Cores de status */
+.status-container.producao {
+    background-color: #feebe8; 
+    color: #e53935;
+}
+.status-container.estoque {
+    background-color: #fff9e6; 
+    color: #ff9800;
+}
+.status-container.venda {
+    /* A cor de status "Venda" usa o azul principal como destaque */
+    background-color: #e8f5fb; 
+    color: #107CE0; 
+}
+
+/* Estoque Atual */
+.caixa-peixes > span:nth-child(5) { 
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Botão Exibir */
+.botao-exibir {
+    background: none;
+    border: none;
+    /* Mantém a cor #107CE0 */
+    color: #107CE0;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    text-align: right; 
+    margin-left: auto; 
+}
+
+/* --- Botão Adicionar --- */
+.adicionar-container {
+    margin: 30px 0 0 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.botao-adicionar {
+    position: absolute;
+    top: -30px; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Gradiente usando a cor #107CE0 como principal */
+    background: linear-gradient(to right, #1e459a, #107CE0); 
+    color: white;
+    border: none;
+    border-radius: 50px; 
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); 
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.botao-adicionar:hover {
+    background: linear-gradient(to right, #107CE0, #1e459a);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.adicionar-icon {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+    margin-right: 0;
+}
+/* === Overlay Principal de Filtro === */
+#overlayFiltroPrincipal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-principal-opcoes {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  min-width: 280px;
+}
+
+#overlayFiltroPrincipal.active .filtro-principal-opcoes {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Botões do filtro principal */
+.filtro-principal-opcoes .filtro-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #107CE0;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  width: 80%;
+  text-align: center;
+}
+.filtro-principal-opcoes .filtro-btn:hover {
+  background-color: #0c62b3;
+  transform: translateY(-2px);
+}
+
+.filtro-principal-opcoes .fechar-filtro {
+  background-color: #e53935;
+}
+.filtro-principal-opcoes .fechar-filtro:hover {
+  background-color: #c62828;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 900px) {
+    main {
+        padding: 20px 20px;
+    }
+
+    .barra-controle,
+    .caixa-peixes {
+        grid-template-columns: 50px 1fr 100px 100px 80px;
+    }
+}
+@media (max-width: 768px) {
+    #sidebar {
+        display: none;
+    }
+    body {
+        justify-content: center;
+    }
+    .container {
+        align-items: center;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .barra-controle {
+        display: none;
+    }
+    
+    .caixa-peixes {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .caixa-peixes span, .status-container, .botao-exibir {
+        width: 100%;
+        text-align: left;
+    }
+    /* styleEstoque.css */
+
+/* --- Overlay Geral --- */
+
+}
+
+/* Fundo escuro e centralização do modal */
+.comp_esto_modal-container {
+  display: none; /* Oculto até ser aberto */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+}
+
+/* Caixa branca do modal */
+.comp_esto_modal {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  width: 800px;
+  box-shadow: 0 7px 15px rgba(0,0,0,0.25);
+  text-align: center;
+}
+
+.titulo-compra {
+  font-style: italic;
+  color: #1e4b85;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.tabela-cabecalho {
+  font-size: larger;
+  display: grid;
+  grid-template-columns: 5fr 5fr 6fr 5fr;
+  background-color: #0d6efd;
+  color: white;
+  padding: 12px;
+
+  font-weight: bold;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+}
+
+.tabela-cabecalho-modal {
+  font-size: larger;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  background-color: #0d6efd;
+  color: white;
+  padding: 12px;
+
+  font-weight: bold;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+}
+
+.tabela-cabecalho-peso {
+  font-size: larger;
+  background-color: #0d6efd;
+  color: white;
+  padding: 12px;
+
+  font-weight: bold;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+}
+
+.tabela-corpo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 20px;
+  margin-top: 8px;
+  gap: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.tabela-corpo select {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.salvar-btn {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  margin-top: 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 2px 3px 0px rgba(0,0,0,0.2);
+}
+
+.salvar-btn:hover {
+  background-color: #0b5ed7;
+}
+
+
+
+.selecionarNomes {
+    background-color: white;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#vend_esto_modal-container {
+  display: none; /* Oculto até ser aberto */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+}
+.selecionar_lista{
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.selecionarNomes-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 900px;
+}
+
+.itemmodal{
+  font-size: large;
+  display: flex;          /* coloca imagem e texto lado a lado */
+  align-items: center;    /* alinha verticalmente no centro */
+  gap: 4px;  
+  background: #fff;
+  margin: 8px 0;
+  padding: 20px;
+  padding-left: 40px;
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.itemmodal img{
+  width: 80px;            /* controla o tamanho */
+  margin-left: 500px;
+  margin-right: 50px;
+  height: auto;           /* mantém proporção */
+  object-fit: contain;
+}
+
+.itemmodal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+}
+
+.item-peixe:hover {
+  background: #e6f0ff;
+}
+
+
+.btnEscolher {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  position: relative;
+  /* reserva mais espaço para o overlay */
+  padding-right: 60px;
+  padding-left: 10px;
+  height: 25px;
+  width: 130px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid black;
+  background: #fff; /* usar cor fixa facilita cobrir o texto */
+  color: #000;
+  cursor: pointer;
+}
+
+/* pseudo com o truncamento personalizado ".. ▾" cobrindo a direita */
+.btnEscolher::after {
+  content: "▾";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+  font-size: 0.95em;
+  color: inherit;
+  background: #fff; /* mesmo fundo do botão para ocultar texto por baixo */
+  z-index: 2;
+  border-left: 1px solid rgba(0,0,0,0.06); /* opcional: separador visual */
+}
+
+.btnEscolher:hover {
+  background: #f0f0f0;
+}
+
+
+/* Container do modal de peso */
+#selecionarpesobackgrond {
+   background: white;
+  padding: 40px 60px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+  min-width: 330px;
+
+}
+/* Botões */
+.itemmodalpeso{
+  background: white;
+  padding: 20px 30px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.100);
+  min-width: 330px;
+
+  box-shadow: 0 4px 6px rgba(0,0,0,0.100);
+  transition: 0.2s;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color : #0b5ed7;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+
+/* Hover */
+.itemmodalpeso:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+}
+#overlayAdicionarProduto {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Modal central */
+.adicionar-produto-modal {
+  background: #fff;
+  padding: 25px;
+  width: 380px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  animation: fadeIn .3s ease;
+}
+
+.adicionar-produto-modal h1 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.form-adicionar-produto label {
+  font-weight: bold;
+}
+
+.form-adicionar-produto input,
+.form-adicionar-produto select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.botoes-adicionar-produto {
+  display: flex;
+  justify-content: space-between;
+}
+
+.botoes-adicionar-produto .btn-fechar {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#novoProdutoImg {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  overflow: hidden;
+}
+
+.upload-button:hover {
+  background-color: #e0e0e0;
+}
+
+#novoProdutoImg:focus + .upload-button { 
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+#file-name {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 420;
+  color: #666;
+  justify-content: left;
+}
+
+.upload-button {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  display: inline-block;
+  /* Estilos de botão: */
+  padding: 8px 16px;
+  background-color: #ffffff; /* Fundo claro */
+  color: #333;
+  cursor: pointer; /* Indica que é clicável */
+  /* Para dar o efeito visual de um clique */
+  transition: background-color 0.2s;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}

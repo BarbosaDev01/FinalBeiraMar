@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    background-image: url("../Assets/imagemFundo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    font-family: "Montserrat", sans-serif;
+}
+
+#logoBeiraAvatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius:1000px ;
+    margin-bottom: 2px;
+    box-shadow: 0px 4px 14px 4px #22222250;
+
+}
+
+#logoBeira {
+    display: grid;
+    place-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    margin-right: 8px;
+    padding: 20px;
+    justify-items: center;
+    padding-top: 65px;
+}
+
+.input_login {
+    width: 450px;
+    height: 40px;
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 22px;
+    border-color: #fff;
+    background: none;
+    text-align: center;
+    color: #fff;
+}
+.input_login::placeholder {
+    color: #ffffffa5;
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.input_login2 {
+    display: grid;
+    place-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    margin-right: 8px;
+    padding: 0px;
+    justify-items: center;
+
+}
+
+.infos{
+    display: grid;
+    place-items: center;
+    gap: 12px;
+    margin-right: 8px;
+    padding: 0px;
+    justify-items: center;
+
+}
+
+#forgot {
+    transition: .2s;
+    display: grid;
+    place-items: center;
+    justify-items:center ;
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 15px;
+}
+
+#forgot:hover{
+    transition: .2s;
+    font-size: 15px;
+}
+
+#buttons_ {
+    display: grid;
+    justify-items: center;
+    padding-bottom: 22px;
+}
+
+.buttons {
+    margin-bottom: 20px;
+}
+
+.button2 {
+    width: 450px;
+    height: 55px;
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: #2148C0;
+    transition: .5s;
+    border-radius: 24px;   
+    cursor: pointer; 
+}
+
+.button2:hover {
+    transition: .2s;
+    width: 460px;
+    height: 60px;
+}
+
+
+.text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+}
+
+#error {
+    display: grid;
+    color: red;
+    justify-items: center;
+    font-weight: 700;
+    font-size: 15px;
+}

@@ -1,0 +1,115 @@
+function carregarSidebar() {
+  // ====== Adiciona Font Awesome ======
+  if (!document.getElementById("fa-link")) {
+    const faLink = document.createElement("link");
+    faLink.id = "fa-link";
+    faLink.rel = "stylesheet";
+    faLink.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css";
+    faLink.integrity = "sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==";
+    faLink.crossOrigin = "anonymous";
+    faLink.referrerPolicy = "no-referrer";
+    document.head.appendChild(faLink);
+  }
+
+  // ====== CSS do sidebar ======
+  if (!document.getElementById("sidebar-style")) {
+    const style = document.createElement("style");
+    style.id = "sidebar-style";
+    style.textContent = `
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+      * { margin:0; padding:0; box-sizing:border-box; font-family:"Montserrat", sans-serif; }
+      body { display:flex; min-height:100vh; background-color: rgb(222,236,248); }
+      main { padding:20px; }
+      #sidebar { display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(to bottom,#2148C0,#107CE0); height:100vh; width:25vh; border-radius:0px 19px 19px 0px; position:relative; }
+      #sidebar_content { padding:0px; }
+      #user { display:flex; align-items:center; gap:12px; margin-bottom:24px; margin-right:8px; padding:20px; }
+      #user_avatar { width:120px; height:120px; object-fit:cover; border-radius:80px; margin-bottom:35px; }
+      #user_infos { display:flex; flex-direction:column; }
+      #side_items { display:flex; flex-direction:column; gap:20px; list-style:none; }
+      .side_item { border-radius:50px 0px 0px 50px; padding:14px; cursor:pointer; transition:.5s; }
+      .side_item.active { background-color:#ffffff; border-radius:50px 0px 0px 50px; }
+      .side_item.active a { color:#107CE0; font-size:18px; font-weight:650; }
+      .side_item:hover:not(.active), #logout_btn:hover { background:#489ff1; }
+      .side_item a { text-decoration:none; display:flex; align-items:center; color:white; }
+      .side_item a i { display:flex; align-items:center; justify-content:center; width:20px; height:20px; margin-right:10px; }
+      #logout { border-top:1px solid white; padding:12px; }
+      #logout_btn { color:white; border:none; padding:12px; font-size:14px; display:flex; gap:20px; align-items:center; border-radius:10px; text-align:start; cursor:pointer; background-color:transparent; transition:.5s; }
+      #sidebar.open-sidebar { min-height:15%; }
+      .subtitle { color:#515151; font-family:"Roboto",sans-serif; font-size:15px; }
+      .text { color:#385C92; font-family:"Roboto",sans-serif; font-style:italic; font-weight:450; font-size:45px; }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // ====== HTML do sidebar ======
+  const sidebarHTML = `
+    <nav id="sidebar">
+      <div id="sidebar_content">
+        <div id="user">
+          <img src="/assets/logo.png" id="user_avatar" alt="Avatar">
+          <p id="user_info"><span class="item-description"></span></p>
+        </div>
+
+        <ul id="side_items">
+          <li class="side_item">
+            <a href="#" onclick="irCtrl()"><i class="fa-solid fa-fish"></i>Controle</a>
+          </li>
+          <li class="side_item">
+            <a href="#" onclick="irPdd()"><i class="fa-solid fa-truck"></i>Pedidos</a>
+          </li>
+          <li class="side_item">
+            <a href="#" onclick="irVendas()"><i class="fa-solid fa-comment-dollar"></i>Vendas</a>
+          </li>
+        
+          <li class="side_item">
+            <a href="#" onclick="irProd()"><i class="fa-solid fa-screwdriver-wrench"></i></i>Producao</a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="logout">
+        <button id="logout_btn" onclick="IrLogin()"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+      </div>
+    </nav>
+  `;
+
+  const container = document.getElementById("sidebar-container");
+  if (container) {
+    container.innerHTML = sidebarHTML;
+
+    // ====== Ativar item correto dinamicamente ======
+    const currentPath = window.location.pathname;
+    const items = document.querySelectorAll("#side_items .side_item");
+    items.forEach(item => item.classList.remove("active"));
+
+    if (currentPath.includes("controleEstoque.html")) items[0].classList.add("active");
+    else if (currentPath.includes("rastreamento.html")) items[1].classList.add("active");
+    else if (currentPath.includes("vendas.html")) items[2].classList.add("active");
+    else if (currentPath.includes("producao.html")) items[4].classList.add("active");
+  } else {
+    console.warn("Elemento #sidebar-container não encontrado!");
+  }
+}
+
+// ====== FUNÇÕES DE NAVEGAÇÃO ======
+
+function IrLogin()
+{
+var x;
+var r=confirm("Você deseja mesmo voltar a tela de login?");
+if (r==true)
+  {
+  window.location.href = "/Login/login.html"
+  }
+else
+  {
+  x="Você pressionou Cancelar!";
+  }
+document.getElementById("demo").innerHTML=x;
+}
+
+function irCtrl()    { window.location.href = "/ControleEstoque/controleEstoque.html"; }
+function irPdd()     { window.location.href = "/pedidos3/pedidos3.html"; }
+function irVendas()  { window.location.href = "/vendas3/vendas3.html"; }
+function irProd()    { window.location.href = "/TelasProducao/producao.html"; }
