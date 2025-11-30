@@ -1,16 +1,16 @@
 function IrMenu(){
    
-    window.location.href = "../ControleEstoque/controleEstoque.html"; 
+    window.location.href = "ControleEstoque/controleEstoque.html"; 
 }
 
 function IrNew(){
    
-    window.location.href = "../Login/New.html"; 
+    window.location.href = "Login/New.html"; 
 }
 
 function IrLogin(){
 
-    window.location.href = "../index.html"; 
+    window.location.href = "index.html"; 
 }
 
 
